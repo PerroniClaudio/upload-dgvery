@@ -1,12 +1,7 @@
 <?php
 
-require './vendor/autoload.php';
-include "./config.php";
-
-
-
-$bucket = $storageClient->bucket('dgvery_swap');
-
+require '../vendor/autoload.php';
+include '../config.php';
 
 $file_name = $_POST["filename"];
 $file = "/var/www/html/uploads/" . $file_name;
@@ -179,10 +174,10 @@ if (file_exists($file)) {
             }
 
             $ts = explode("_", $file_name);
-            $pictures = array("/var/www/html/uploads/{$ts[0]}/picture1.jpg", "/var/www/html/uploads/{$ts[0]}/picture2.jpg", "/var/www/html/uploads/{$ts[0]}/picture3.jpg", "/var/www/html/uploads/{$ts[0]}/picture4.jpg");
+            $pictures = array("/var/www/html/mux-uploader/mux-uploads/{$ts[0]}/picture1.jpg", "/var/www/html/mux-uploader/mux-uploads/{$ts[0]}/picture2.jpg", "/var/www/html/mux-uploader/mux-uploads/{$ts[0]}/picture3.jpg", "/var/www/html/mux-uploader/mux-uploads/{$ts[0]}/picture4.jpg");
             $pictures2 = array();
 
-            mkdir("/var/www/html/uploads/{$ts[0]}/");
+            mkdir("/var/www/html/mux-uploader/mux-uploads/{$ts[0]}/");
 
             try {
                 $video = $ffmpeg->open($file);
@@ -261,11 +256,11 @@ if (file_exists($file)) {
                     file_name = ?
                 WHERE id = ? ";
             $statement = $db->prepare($sql);
-            $statement->execute(array('uploaded_on_bucket', $file_name, $upload_id));
+            $statement->execute(array('ready_for_mux', $file_name, $upload_id));
 
             $sql = "INSERT INTO transcoding_timestamps (state,transcoding_id) VALUES (?,?) ";
             $statement = $db->prepare($sql);
-            $statement->execute(array('uploaded_on_bucket', $upload_id));
+            $statement->execute(array('ready_for_mux', $upload_id));
 
             //unlink($file);
 
@@ -305,7 +300,7 @@ function createVideo($title) {
     $check_code = true;
 
     while ($check_code) {
-        $bucket_code = '0123456789';
+        $bucket_code = generateRandomString(6, '0123456789');
         $bucket_code_quoted = $db->quote($bucket_code);
 
         $check_code_query = $db->query("SELECT * FROM video_library WHERE bucket_code = $bucket_code_quoted");
