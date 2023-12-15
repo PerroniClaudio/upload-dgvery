@@ -1,5 +1,6 @@
 {
     "require": {
-        "php-ffmpeg/php-ffmpeg": "^1.1"
+        "php-ffmpeg/php-ffmpeg": "^1.1",
+        "muxinc/mux-php": ">=0.0.1"
     }
 }

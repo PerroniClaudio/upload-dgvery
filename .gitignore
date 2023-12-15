@@ -1,3 +1,4 @@
 /vendor/**
+/mux-uploader/mux-uploads/**
 .env
 
