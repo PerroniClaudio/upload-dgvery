@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 include '../config.php';
 
 $file_name = $_POST["filename"];
-$file = "/var/www/html/uploads/" . $file_name;
+$file = "/var/www/html/mux-uploader/mux-uploads/" . $file_name;
 
 
 $video_id = "";
@@ -289,6 +289,7 @@ if (file_exists($file)) {
     }
 } else {
     $errors['message'] = "Il video non è arrivato";
+    $errors['file'] = $file;
     echo json_encode($errors);
 }
 

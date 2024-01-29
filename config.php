@@ -1,6 +1,6 @@
 <?php
 
-$config = parse_ini_file('./.env');
+$config = parse_ini_file('/var/www/html/.env');
 
 function generateRandomString($length = 10, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
 
